@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'users/index'
-  get 'users/show'
-  get 'users/edit'
-  get 'users/update'
   get 'homes/about'
   devise_for :users
   
@@ -10,4 +6,6 @@ Rails.application.routes.draw do
   
   resources :users, only: [:index, :show, :edit, :update] do
   end
+  
+  resources :posts
 end

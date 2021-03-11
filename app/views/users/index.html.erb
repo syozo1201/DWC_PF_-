@@ -7,11 +7,10 @@
 <div class="container mt-5">
   <div class="row">
     <% @users.each do |user| %>
-      <div class="card col-md-3">
-        <%= attachment_image_tag user, :profile_image, fallback: "no-image.jpg", size:"220x220", class: "d-block mx-auto" %>
+      <div class="col-md-3">
+        <%= link_to attachment_image_tag(user, :profile_image, fallback: "no-image.jpg", size:"220x220", class: "d-block mx-auto rounded-circle"), user_path(user) %>
         <div class="card-body">
-          <h5 class="card-title"><%= truncate(user.name, length: 10) %></h5>
-          <p class="card-text"><%= truncate(user.introduction, length: 20) %></p>
+          <h5 class="card-title"><%= link_to truncate(user.name, length: 10), user_path(user) %></h5>
           <%= link_to "詳細をみる", user_path(user), class: "btn btn-primary btn-shadow btn-lg d-block mx-auto" %>
         </div>
       </div>

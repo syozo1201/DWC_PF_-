@@ -1,0 +1,20 @@
+<div class="topic">
+  <div class="container">
+    <h1 class="mt-4 topic-font">投稿一覧ページ</h1>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-md-3">
+        <%= attachment_image_tag post, :post_image, fallback: "no-image.jpg", size:"220x220", class: "d-block mx-auto" %>
+        <div class="card-body">
+          <h5 class="card-title"><%= truncate(post.title, length: 10) %></h5>
+          <p class="card-text"><%= truncate(post.post_content, length: 20) %></p>
+          <%= link_to "詳細をみる", post_path(post), class: "btn btn-primary btn-shadow btn-lg d-block mx-auto" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
