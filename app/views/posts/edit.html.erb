@@ -1,0 +1,43 @@
+<div class="topic">
+  <div class="container">
+    <h1 class="mt-4 topic-font">編集</h1>
+  </div>
+</div>
+
+<div class="container">
+  <!--<%# if @post.errors.any? %>-->
+  <!--  <div class="notification is-danger">-->
+  <!--    <h2><%#= pluralize(@post.errors.count, "つのエラー") %>保存に失敗しました。</h2>-->
+  <!--    <ul>-->
+  <!--      <%# @post.errors.full_messages.each do |message| %>-->
+  <!--      <li><%#= message %></li>-->
+  <!--      <%# end %>-->
+  <!--    </ul>-->
+  <!--  </div>-->
+  <!--<%# end %>-->
+
+  <div class="main">
+    <div class="form-wrap">
+　　<%= form_with model: @post, url: post_path, local:true do |f| %>
+　　  <div class="form-group mb-4">
+        <%= f.label :post_image, "画像", class: "font-weight-bold" %>
+        <%= f.attachment_field :post_image, class: "input" %>
+      </div>
+
+      <div class="form-group mb-4">
+        <%= f.label "タイトル", class: "font-weight-bold mb-2" %><br />
+        <%= f.text_field :title, class: "form-control" %>
+      </div>
+
+      <div class="form-group mb-4">
+        <%= f.label "本文", class: "font-weight-bold" %><br />
+        <%= f.text_field :post_content, class: "form-control" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "投稿する", class: "btn btn-primary btn-shadow w-100" %>
+      </div>
+    <% end %>
+    </div>
+  </div>
+</div>
