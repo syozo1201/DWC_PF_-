@@ -1,44 +1,44 @@
-<div class="topic">
-  <div class="container">
-    <h1 class="mt-4 topic-font">投稿詳細</h1>
-  </div>
-</div>
-
 <div class="container">
-  <div class="mt-5">
-    <div class="row">
-      <div class="col-md-4">
-        <%= attachment_image_tag @post, :post_image, fallback: "no-image.jpg", size:"250x250", class: "" %>
-      </div>
-      <div class="col-md-8 pr-0">
-        <div class="row">
-          <div class="col-md-4">
-            <h2><%= @post.title %></h2>
-          </div>
-          <% if @post.user_id == current_user.id %>
-            <div class="col-md-3">
-              <%= link_to "編集", edit_post_path(@post), class: "btn btn-primary btn-shadow btn-lg d-block mx-auto" %>
-            </div>
-            <dev class="col-md-3">
-              <%= link_to "削除", post_path(@post), class: "btn btn-primary btn-shadow btn-lg d-block mx-auto", method: :delete %>
-            </dev>
+  <div class="row">
+    <div class="col-md-7 col-xs-12 mx-auto">
+      <% if @post.user_id == current_user.id %>
+        <%= link_to "編集", edit_post_path(@post), class: "btn btn-primary btn-shadow btn-sm d-block mx-auto" %>
+        <%= link_to "削除", post_path(@post), class: "btn btn-primary btn-shadow btn-sm d-block mx-auto", method: :delete %>
+      <% end %>
+
+      <article class="mt-4 shadow-lg">
+        <%= attachment_image_tag @post, :post_image, fallback: "no-image.jpg", class: "card-img-top card-img-lg" %>
+        <h2 class="border-bottom border-gray font-weight-bold m-3 text-center">
+          <%= @post.title %>
+        </h2>
+
+        <h5 class="border-bottom border-gray font-weight-bold m-3 text-center">
+          <%= @post.post_content %>
+        </h5>
+
+        <nav class="navbar-expand border-bottom border-gray m-3">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ml-4 h5">
+              <%= link_to @post.user.name, user_path(@post.user.id), class: "fas fa-user" %>
+            </li>
+
+            <li class="nav-item ml-4 h5 favorite-btn_<%= @post.id %>">
+              <%= render "favorites/favorite-btn", post: @post %>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="m-3 comments">
+          <%= render "post_comments/comments", post: @post %>
+        </div>
+
+        <div class="new-comment">
+          <%= form_with(model:[@post, @post_comment], remote: true) do |f| %>
+            <%= f.text_field :comment, rows:'4', class: "mt-2 w-100", placeholder: "コメントをここに" %>
+            <%= f.submit "送信する", class: "mt-2 btn btn-info btn-block w-100" %>
           <% end %>
         </div>
-        <div class="mt-4 mr-5"><%= @post.post_content %></div>
-      </div>
-    </div>
-    <hr>
-    <div class="m-2 favorite-btn_<%= @post.id %>"><%= render "favorites/favorite-btn", post: @post %></div>
-    <div class="m-2 post-time"><%= time_ago_in_words(@post.created_at).upcase %>前</div>
-    <hr>
-    <div class="comments">
-      <%= render "post_comments/comments", post: @post %>
-    </div>
-    <div class="new-comment">
-      <%= form_with(model:[@post, @post_comment], remote: true) do |f| %>
-        <%= f.text_field :comment, class: "form-control", placeholder: "コメントをここに" %>
-        <%= f.submit "送信する" %>
-      <% end %>
+      </article>
     </div>
   </div>
 </div>
