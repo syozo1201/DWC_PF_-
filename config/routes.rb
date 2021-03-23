@@ -14,4 +14,7 @@ Rails.application.routes.draw do
     resource :favorites, only: [:create, :destroy, :index]
     resources :post_comments, only: [:create, :destroy]
   end
+
+  get 'post/ranking' => 'posts#rank'
+  get 'post/random' => 'posts#random'
 end
