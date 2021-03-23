@@ -31,6 +31,9 @@
         はじめてご利用の方ですか？
         <%= link_to "登録する", new_user_registration_path %>
       </p>
+      <p>
+        <%= link_to 'Twitterでログイン', user_twitter_omniauth_authorize_path, method: :post%>
+      </p>
     </div>
   </div>
 </div>

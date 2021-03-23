@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get 'homes/about'
-  devise_for :users
+  devise_for :users, controllers: {
+   omniauth_callbacks: 'users/omniauth_callbacks',
+   registrations: 'users/registrations'
+ }
 
   root 'homes#top'
 
