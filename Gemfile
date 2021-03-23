@@ -74,3 +74,6 @@ gem 'jquery-rails'
 gem 'font-awesome-sass', '~> 5.13'
 gem 'kaminari','~> 1.2.1'
 gem 'pry-byebug'
+
+gem 'omniauth', '1.9.1'
+gem 'omniauth-twitter', '1.4.0'
