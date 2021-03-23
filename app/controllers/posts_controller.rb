@@ -1,8 +1,16 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = Post.all
+    @posts = Post.order(created_at: :desc)
     @posts = Post.joins(:user).select("posts.*, users.*").where('title LIKE ? OR post_content LIKE ? OR name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
+  end
+
+  def rank
+    @posts = Post.find(Favorite.group(:post_id).order('count(post_id) desc').pluck(:post_id))
+  end
+
+  def random
+    @posts = Post.order("RANDOM()").limit(5)
   end
 
   def new
