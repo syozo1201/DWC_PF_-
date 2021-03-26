@@ -17,3 +17,16 @@
 @import "bootstrap";
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+
+// @media screen and (max-width:991px) {
+
+//   .navbar-nav {
+//     margin-right: 55%;
+//   }
+// }
+
+.card-img-lg {
+    max-height:410px;
+    object-fit: contain;
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+}

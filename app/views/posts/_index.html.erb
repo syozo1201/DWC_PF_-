@@ -1,6 +1,6 @@
 <% posts.each do |post| %>
-  <article class="mt-5 shadow-lg">
-    <%= link_to attachment_image_tag(post, :post_image, fallback: "no-image.jpg", size:"500x450", class: "d-block mx-auto"),  post_path(post)%>
+  <article class="mt-5 shadow-lg mx-auto pb-1">
+    <%= link_to attachment_image_tag(post, :post_image, fallback: "no-image.jpg", class: "card-img-top card-img-lg"),  post_path(post)%>
 
     <h2 class="font-weight-bold m-3 text-center">
       <%= link_to truncate(post.title, length: 8), post_path(post.id) %>

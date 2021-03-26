@@ -1,28 +1,72 @@
-<div class="topic">
-  <div class="container">
-    <h1 class="mt-4 topic-font">マイページ</h1>
-  </div>
-</div>
-
 <div class="container">
-  <div class="mt-5">
-    <div class="row">
-      <div class="col-md-3 text-center">
-        <%= attachment_image_tag @user, :profile_image, fallback: "no-image.jpg", size:"160x160", class: "rounded-circle" %>
-      </div>
-      <div class="col-md-9 pr-0">
-        <div class="row">
-          <div class="col-md-4">
-          <h2><%= @user.name %></h2>
-          </div>
-          <% if @user == current_user %>
-            <div class="col-md-3">
-              <%= link_to "会員情報の編集", edit_user_path(@user), class: "btn btn-primary btn-shadow btn-lg d-block mx-auto" %>
-            </div>
+  <div class="row">
+    <div class="col-md-7 col-xs-12 mx-auto">
+      <h5 class="mt-4 font-weight-bold">
+        <%= @user.name %>
+      </h5>
+      <div class="row pb-3 border-bottom border-gray">
+        <div class="col-4 ml-1 text-center">
+          <%= attachment_image_tag @user, :profile_image, :fill, 110, 110, format: 'jpeg', fallback: "no_image.jpg", size: "110x110", class:"rounded-circle shadow-sm mt-2"; %>
+          <% if user_signed_in? %>
+            <span class="show-follow-btn">
+              <%= render '/relationships/follow_btn', user: @user %>
+            </span>
+            <% if @user == current_user %>
+              <%= link_to "会員情報の編集",edit_user_path(@user), data: {"turbolinks" => false}, class:"btn-secondary btn mt-4 btn-sm btn-block"; %>
+            <% end %>
           <% end %>
         </div>
-        <div class="mt-4 mr-5"><%= @user.introduction %></div>
+        <div class="col-7 ml-1">
+          <table class="table-sm font-weight-bold">
+            <tbody>
+              <tr>
+                <th>
+                  <i class="fas fa-thumbs-up text-danger"></i> 総数
+                </th>
+                <td>
+                <span class="favorites-count">
+                  <%= @favorites_count %>
+                </span>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <i class="fas fa-camera"></i> 投稿
+                </th>
+                <td>
+                  <%#= link_to user_mytheme_path(@user) do %>
+                    <%#= @user.themes.count %>
+                  <%# end %>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  フォロー
+                </th>
+                <td>
+                  <%= link_to user_followings_path(@user) do %>
+                    <%= @user.followings.count %>
+                  <% end %>
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  フォロワー
+                </th>
+                <td>
+                  <%= link_to user_followers_path(@user) do %>
+                   <%= @user.followers.count %>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+      <h5 class="border-bottom border-gray mt-5 font-weight-bold">
+        <i class="fas fa-camera"></i> 投稿（全<%= @posts.count %>件）
+      </h5>
+      <%= render '/posts/index', posts: @posts %>
     </div>
   </div>
 </div>
