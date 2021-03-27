@@ -6,7 +6,7 @@
       </h5>
       <div class="row pb-3 border-bottom border-gray">
         <div class="col-4 ml-1 text-center">
-          <%= attachment_image_tag @user, :profile_image, :fill, 110, 110, format: 'jpeg', fallback: "no_image.jpg", size: "110x110", class:"rounded-circle shadow-sm mt-2"; %>
+          <%= attachment_image_tag @user, :profile_image, :fill, 110, 110, format: 'jpeg', fallback: "no-image.jpg", size: "110x110", class:"rounded-circle shadow-sm mt-2"; %>
           <% if user_signed_in? %>
             <span class="show-follow-btn">
               <%= render '/relationships/follow_btn', user: @user %>
@@ -34,9 +34,7 @@
                   <i class="fas fa-camera"></i> 投稿
                 </th>
                 <td>
-                  <%#= link_to user_mytheme_path(@user) do %>
-                    <%#= @user.themes.count %>
-                  <%# end %>
+                  <%= @user.posts.count %>
                 </td>
               </tr>
               <tr>
@@ -61,6 +59,7 @@
               </tr>
             </tbody>
           </table>
+          <%= @user.introduction %>
         </div>
       </div>
       <h5 class="border-bottom border-gray mt-5 font-weight-bold">

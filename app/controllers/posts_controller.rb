@@ -1,12 +1,14 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = Post.order(created_at: :desc)
-    @posts = Post.joins(:user).select("posts.*, users.*").where('title LIKE ? OR post_content LIKE ? OR name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
+    @posts = Post.page(params[:page]).page(params[:page]).per(5).order(created_at: :desc)
+    #@posts = Post.joins(:user).select("posts.*, users.*").where('title LIKE ? OR post_content LIKE ? OR name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
+    #@posts = Kaminari.paginate_array(@posts).page(params[:page]).per(5).order(created_at: :desc)
   end
 
   def rank
-    @posts = Post.find(Favorite.group(:post_id).order('count(post_id) desc').pluck(:post_id))
+    @posts = Post.find(Favorite.group(:post_id).pluck(:post_id))
+    @posts = Kaminari.paginate_array(@posts).page(params[:page]).per(5)
   end
 
   def random
