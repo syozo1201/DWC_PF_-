@@ -12,7 +12,6 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :post_comments, dependent: :destroy
   has_many :sns_credentials, dependent: :destroy
-  
   # 自分がフォローされる（被フォロー）側の関係性
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   # 自分がフォローする（与フォロー）側の関係性
@@ -21,7 +20,7 @@ class User < ApplicationRecord
   has_many :followers, through: :reverse_of_relationships, source: :follower
   # 与フォロー関係を通じて参照→自分がフォローしている人
   has_many :followings, through: :relationships, source: :followed
-  
+
   def follow(user_id)
     relationships.create(followed_id: user_id)
   end
@@ -47,4 +46,7 @@ class User < ApplicationRecord
    end
    { user: user, sns: sns }
   end
+
+  validates :name, presence: true
+  validates :name, length: { minimum: 1, maximum: 20 }
 end

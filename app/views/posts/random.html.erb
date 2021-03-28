@@ -13,11 +13,35 @@
             <%= link_to "人気", post_ranking_path %>
           </li>
           <li class="nav-item ml-4 nav-link active">
-            <%= link_to "ランダム", post_random_path %>
+            <%= link_to "ランダム5", post_random_path %>
           </li>
         </ul>
       </nav>
-      <%= render '/posts/index', posts: @posts %>
+      <% @posts.each do |post| %>
+        <article class="mt-5 shadow-lg mx-auto pb-1">
+          <%= link_to attachment_image_tag(post, :post_image, fallback: "no-image.jpg", class: "card-img-top card-img-lg"),  post_path(post)%>
+      
+          <h2 class="font-weight-bold m-3 text-center">
+            <%= link_to truncate(post.title, length: 8), post_path(post.id) %>
+          </h2>
+      
+          <nav class="navbar-expand border-bottom border-gray m-3">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item ml-4 h5">
+                <%= link_to post.user.name, user_path(post.user.id), class: "fas fa-user" %>
+              </li>
+      
+              <li class="nav-item ml-4 h5">
+                <%= link_to post.post_comments.count, post_path(post.id), class: "fas fa-comment" %>
+              </li>
+      
+              <li class="nav-item ml-4 h5 favorite-btn_<%= post.id %>">
+                <%= render "favorites/favorite-btn", post: post %>
+              </li>
+            </ul>
+          </nav>
+        </article>
+      <% end %>
     </div>
   </div>
 </div>

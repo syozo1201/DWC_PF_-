@@ -6,6 +6,7 @@ Rails.application.routes.draw do
  }
 
   root 'homes#top'
+  get '/search' => 'searchs#search'
 
   resources :users, only: [:index, :show, :edit, :update] do
     resource :relationships, only: [:create, :destroy]
@@ -15,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :posts do
     resource :favorites, only: [:create, :destroy, :index]
-    resources :post_comments, only: [:create, :destroy]
+    resources :post_comments, only: [:create, :destroy, :show]
   end
 
   get 'post/ranking' => 'posts#rank'

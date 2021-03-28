@@ -1,11 +1,6 @@
 <div class="container">
   <div class="row">
     <div class="col-md-7 col-xs-12 mx-auto">
-      <% if @post.user_id == current_user.id %>
-        <%= link_to "編集", edit_post_path(@post), class: "btn btn-primary btn-shadow btn-sm d-block mx-auto" %>
-        <%= link_to "削除", post_path(@post), class: "btn btn-primary btn-shadow btn-sm d-block mx-auto", method: :delete %>
-      <% end %>
-
       <article class="mt-4 shadow-lg">
         <%= attachment_image_tag @post, :post_image, fallback: "no-image.jpg", class: "card-img-top card-img-lg" %>
         <h2 class="border-bottom border-gray font-weight-bold m-3 text-center">
@@ -22,9 +17,28 @@
               <%= link_to @post.user.name, user_path(@post.user.id), class: "fas fa-user" %>
             </li>
 
+            <li class="nav-item ml-4 h5">
+              <%= link_to @post.post_comments.count, post_path(@post), class: "fas fa-comment" %>
+            </li>
+
             <li class="nav-item ml-4 h5 favorite-btn_<%= @post.id %>">
               <%= render "favorites/favorite-btn", post: @post %>
             </li>
+
+            <% if @post.user_id == current_user.id %>
+            <li class="nav-item ml-4 h5">
+              <%= link_to edit_post_path(@post) do %>
+                <i class="fas fa-edit"></i>
+              <% end %>
+            </li>
+
+            <li class="nav-item ml-4 h5">
+              <%= link_to  post_path(@post), method: :delete, data: {confirm: "削除しますか？"} do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
+            </li>
+            <% end %>
+
           </ul>
         </nav>
 
@@ -33,8 +47,11 @@
         </div>
 
         <div class="new-comment">
+          <div class="comments-error">
+            <%= render "post_comments/errors", post_comment: @post_comment %>
+          </div>
           <%= form_with(model:[@post, @post_comment], remote: true) do |f| %>
-            <%= f.text_field :comment, rows:'4', class: "mt-2 w-100", placeholder: "コメントをここに" %>
+            <%= f.text_field :comment, rows:'4', class: "mt-2 w-100", placeholder: "コメントを入力" %>
             <%= f.submit "送信する", class: "mt-2 btn btn-info btn-block w-100" %>
           <% end %>
         </div>
