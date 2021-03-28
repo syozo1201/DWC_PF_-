@@ -18,6 +18,14 @@
         <%= f.email_field :email, autofocus: true, class: "form-control" %>
       </div>
 
+      <%if @sns_id.present? %>
+        <%= hidden_field_tag :sns_auth, true %>
+        <%= f.hidden_field :twitter_image_url %>
+      <% else %>
+      <%if @sns_id.present? %>
+        <%= hidden_field_tag :sns_auth, true %>
+        <%= f.hidden_field :twitter_image_url %>
+      <% else %>
       <div class="form-group mb-4">
         <%= f.label "パスワードの入力", class: "font-weight-bold mb-0" %><br />
         <div class="mb-2">半角英数字でご入力ください。</div>
@@ -28,6 +36,8 @@
         <%= f.label "パスワード（確認用）の入力", class: "font-weight-bold" %><br />
         <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control" %>
       </div>
+      <% end %>
+      <% end %>
 
       <div class="actions">
         <%= f.submit "会員登録をする", class: "btn btn-primary btn-shadow w-100" %>
@@ -39,6 +49,12 @@
       <p class="devise-link">
         すでに会員登録済ですか？
         <%= link_to "会員様はこちら", new_user_session_path %>
+      </p>
+      <p>
+        <%= link_to 'Twitterで登録', user_twitter_omniauth_authorize_path, method: :post%>
+      </p>
+      <p>
+        <%= link_to 'Twitterで登録', user_twitter_omniauth_authorize_path, method: :post%>
       </p>
     </div>
   </div>

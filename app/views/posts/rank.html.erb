@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 col-xs-12 mx-auto">
+      <h5 class="border-bottom border-gray mt-4 font-weight-bold text-center">
+        みんなの投稿
+      </h5>
+      <nav class="navbar-expand mt-2">
+        <ul class="navbar-nav ml-auto nav-tabs">
+          <li class="nav-item ml-4 nav-link">
+            <%= link_to "新着", posts_path %>
+          </li>
+          <li class="nav-item ml-4 nav-link active">
+            <%= link_to "人気", post_ranking_path %>
+          </li>
+          <li class="nav-item ml-4 nav-link">
+            <%= link_to "ランダム5", post_random_path %>
+          </li>
+        </ul>
+      </nav>
+      <%= render '/posts/index', posts: @posts %>
+    </div>
+  </div>
+</div>
