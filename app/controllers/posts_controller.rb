@@ -2,8 +2,6 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.page(params[:page]).page(params[:page]).per(5).order(created_at: :desc)
-    #@posts = Post.joins(:user).select("posts.*, users.*").where('title LIKE ? OR post_content LIKE ? OR name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
-    #@posts = Kaminari.paginate_array(@posts).page(params[:page]).per(5).order(created_at: :desc)
   end
 
   def rank
@@ -12,7 +10,11 @@ class PostsController < ApplicationController
   end
 
   def random
+    if ActiveRecord::Base.connection_config[:adapter] == 'sqlite3'  #ローカル。DBで判断
     @posts = Post.order("RANDOM()").limit(5)
+    else
+    @posts = Post.order("RAND()").limit(5)
+    end
   end
 
   def new
@@ -25,8 +27,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to post_path(@post)
     else
-      @posts = Post.all
-      redirect_to posts_path
+      render 'new'
     end
   end
 
@@ -37,17 +38,28 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
+    if @user != current_user
+      redirect_to post_path(@post.id)
+    end
   end
 
   def update
     @post = Post.find(params[:id])
-    @post.update(post_params)
-    redirect_to post_path(@post)
+    if @post.update(post_params)
+      redirect_to post_path(@post)
+    else
+      render :edit
+    end
   end
 
   def destroy
     post = Post.find(params[:id])
-    post.destroy
+    if post.user == current_user
+      post.destroy
+      flash[:notice] = "投稿が削除されました。"
+    else
+      flash[:alert] = "投稿の削除に失敗しました。"
+    end
     redirect_to posts_path
   end
 
