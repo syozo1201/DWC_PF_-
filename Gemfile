@@ -78,3 +78,5 @@ gem 'rails-i18n'
 
 gem 'omniauth', '1.9.1'
 gem 'omniauth-twitter', '1.4.0'
+
+gem 'listen', '>= 3.0.5', '< 3.2'
