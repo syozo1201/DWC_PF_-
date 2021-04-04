@@ -16,8 +16,6 @@
 ### 主な利用シーン
 生活の中でくすっと来る物があったら投稿しましょう
 
-## 設計書
-
 ## チャレンジ要素一覧
 https://docs.google.com/spreadsheets/d/1LHkDHbEPq17tjKbGB-YzsG21pktu64EnjN02IORqql8/edit#gid=0
 
