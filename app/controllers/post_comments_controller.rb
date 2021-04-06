@@ -6,6 +6,7 @@ class PostCommentsController < ApplicationController
     @post_comment.post_id = @post.id
     # comment = current_user.post_comments.new(post_comment_params)
     # comment.post_id = @post.id
+    @post_comment.score = Language.get_data(post_comment_params[:comment])
     unless @post_comment.save
       render 'posts/show'
     end
