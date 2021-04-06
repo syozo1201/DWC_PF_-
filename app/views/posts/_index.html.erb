@@ -3,7 +3,7 @@
     <%= link_to attachment_image_tag(post, :post_image, fallback: "no-image.jpg", class: "card-img-top card-img-lg"),  post_path(post)%>
 
     <h2 class="font-weight-bold m-3 text-center">
-      <%= link_to truncate(post.title, length: 8), post_path(post.id) %>
+      <%= link_to truncate(post.title, length: 15), post_path(post.id) %>
     </h2>
 
     <nav class="navbar-expand border-bottom border-gray m-3">

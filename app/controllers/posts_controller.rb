@@ -23,6 +23,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    @post.score = Language.get_data(post_params[:post_content])
     @post.user_id = current_user.id
     if @post.save
       redirect_to post_path(@post)
@@ -38,7 +39,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find(params[:id])
-    if @user != current_user
+    if @post.user != current_user
       redirect_to post_path(@post.id)
     end
   end
